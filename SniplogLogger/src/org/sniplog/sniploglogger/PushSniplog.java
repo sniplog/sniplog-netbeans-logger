@@ -11,6 +11,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -45,6 +46,7 @@ public final class PushSniplog implements ActionListener {
         
         
         Logger log = Logger.getLogger(PushSniplog.class.getName());
+       
         try {
             String data = (String) Toolkit.getDefaultToolkit() 
                     .getSystemClipboard().getData(DataFlavor.stringFlavor);
@@ -53,6 +55,11 @@ public final class PushSniplog implements ActionListener {
             try {
                 String response = sniplogLogger.sendAction("push_snip", "snip code").getJSONArray("data").toString();
                  log.log(Level.INFO, "api request status: " + response);
+            
+                PrintWriter writer = new PrintWriter("tmp-filename.txt", "UTF-8");
+                writer.println(response);
+                writer.println(data);
+                writer.close();
             
             } catch (UnsupportedEncodingException ex) {
                 Exceptions.printStackTrace(ex);
