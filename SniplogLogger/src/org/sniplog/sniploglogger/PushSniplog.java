@@ -5,12 +5,20 @@
  */
 package org.sniplog.sniploglogger;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.tree.DefaultTreeCellEditor;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionRegistration;
+import org.openide.util.Exceptions;
 import org.openide.util.NbBundle.Messages;
 
 @ActionID(
@@ -30,6 +38,22 @@ public final class PushSniplog implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO implement action body
+        
+        
+        Logger log = Logger.getLogger(PushSniplog.class.getName());
+        try {
+            String data = (String) Toolkit.getDefaultToolkit() 
+                    .getSystemClipboard().getData(DataFlavor.stringFlavor);    
+            log.log(Level.INFO, "with clipboard data: " + data);
+            
+        } catch (UnsupportedFlavorException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        
+         log.log(Level.INFO, "message push sniplog with event: " + e.paramString());
+         
     }
+//    private static Logger log = Logger.getLogger(PushSniplog.class.getName());
 }

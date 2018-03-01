@@ -23,7 +23,24 @@
                     </run-dependency>
                 </dependency>
             </module-dependencies>
+            <test-dependencies>
+                <test-type>
+                    <name>unit</name>
+                    <test-dependency>
+                        <code-name-base>org.netbeans.libs.junit4</code-name-base>
+                        <compile-dependency/>
+                    </test-dependency>
+                </test-type>
+            </test-dependencies>
             <public-packages/>
+            <class-path-extension>
+                <runtime-relative-path>ext/java-json.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/java-json.jar</binary-origin>
+            </class-path-extension>
+            <class-path-extension>
+                <runtime-relative-path>ext/javafx-ui-swing.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/javafx-ui-swing.jar</binary-origin>
+            </class-path-extension>
         </data>
     </configuration>
 </project>
