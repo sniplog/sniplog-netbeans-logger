@@ -11,9 +11,13 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.tree.DefaultTreeCellEditor;
+import org.json.JSONException;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -43,8 +47,26 @@ public final class PushSniplog implements ActionListener {
         Logger log = Logger.getLogger(PushSniplog.class.getName());
         try {
             String data = (String) Toolkit.getDefaultToolkit() 
-                    .getSystemClipboard().getData(DataFlavor.stringFlavor);    
+                    .getSystemClipboard().getData(DataFlavor.stringFlavor);
+            
+            SniplogLogger sniplogLogger = new SniplogLogger();
+            try {
+                String response = sniplogLogger.sendAction("push_snip", "snip code").getJSONArray("data").toString();
+                 log.log(Level.INFO, "api request status: " + response);
+            
+            } catch (UnsupportedEncodingException ex) {
+                Exceptions.printStackTrace(ex);
+            } catch (ProtocolException ex) {
+                Exceptions.printStackTrace(ex);
+            } catch (MalformedURLException ex) {
+                Exceptions.printStackTrace(ex);
+            } catch (JSONException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+            
+            
             log.log(Level.INFO, "with clipboard data: " + data);
+            
             
         } catch (UnsupportedFlavorException ex) {
             Exceptions.printStackTrace(ex);
